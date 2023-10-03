@@ -1,8 +1,78 @@
-﻿@{
+﻿@model List<Employee>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@if (int.TryParse("" + TempData["count"], out int count) && count > 0)
+{
+    <div class="alert alert-primary" role="alert">
+        @count rows were successfully processed!
+    </div>
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-10">
+            <input class="form-control" type="file" name="file" />
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Import from CSV</button>
+        </div>
+    </div>
+</form>
+<div class="mt-5" style="text-align:center">
+    <h2>Employees</h2>
+    <table id="csv_table" class="table text-center">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Payroll_Number</th>
+                <th>Forenames</th>
+                <th>Surname</th>
+                <th>Date_of_Birth</th>
+                <th>Telephone</th>
+                <th>Mobile</th>
+                <th>Address</th>
+                <th>Address_2</th>
+                <th>Postcode</th>
+                <th>EMail_Home</th>
+                <th>Start_Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <td>@employee.Id</td>
+                    <td>@employee.Payroll_Number</td>
+                    <td>@employee.Forenames</td>
+                    <td>@employee.Surname</td>
+                    <td>@employee.Date_of_Birth</td>
+                    <td>@employee.Telephone</td>
+                    <td>@employee.Mobile</td>
+                    <td>@employee.Address</td>
+                    <td>@employee.Address_2</td>
+                    <td>@employee.Postcode</td>
+                    <td>@employee.EMail_Home</td>
+                    <td>@employee.Start_Date</td>
+                    <td><a asp-action="Edit", asp-controller="Home", asp-route-id="@employee.Id">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#csv_table').DataTable();
+        });
+    </script>
+}

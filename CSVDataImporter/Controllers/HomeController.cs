@@ -1,4 +1,5 @@
 ﻿using CSVDataImporter.Models;
+using CSVDataImporter.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,21 +7,50 @@ namespace CSVDataImporter.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly EmployeeService _employeeService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(EmployeeService employeeService)
         {
-            _logger = logger;
+            _employeeService = employeeService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            List<Employee> employees = _employeeService.GetAll();
+            return View(employees);
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public IActionResult Index(IFormFile file)
         {
-            return View();
+            if (file == null)
+                TempData["count"] = 0;
+            else
+            {
+                int res = _employeeService.ImportFromCSV(file);
+                TempData["count"] = res;
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            Employee? model = _employeeService.GetById(id);
+            if (model == null)
+                return NotFound();
+            else
+                return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Employee model)
+        {
+            int res = _employeeService.Edit(model);
+            if (res > 0)
+                return RedirectToAction(nameof(Index));
+            else
+                return BadRequest();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

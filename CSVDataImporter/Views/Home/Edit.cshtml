@@ -1,0 +1,64 @@
+﻿@model Employee
+
+<div>
+    <form asp-action="Edit" asp-controller="Home" method="post">
+        <input asp-for="Id" type="hidden"/>
+        <div class="row">
+            <div class="col-md-4">
+                <label asp-for="Payroll_Number"></label>
+                <input asp-for="Payroll_Number" class="form-control"/>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Forenames"></label>
+                <input asp-for="Forenames" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Surname"></label>
+                <input asp-for="Surname" class="form-control"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label asp-for="Date_of_Birth"></label>
+                <input asp-for="Date_of_Birth" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Telephone"></label>
+                <input asp-for="Telephone" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Mobile"></label>
+                <input asp-for="Mobile" class="form-control"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label asp-for="Address"></label>
+                <input asp-for="Address" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Address_2"></label>
+                <input asp-for="Address_2" class="form-control"/>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Postcode"></label>
+                <input asp-for="Postcode" class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label asp-for="EMail_Home"></label>
+                <input asp-for="EMail_Home" class="form-control" />
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Start_Date"></label>
+                <input asp-for="Start_Date" class="form-control" />
+            </div>
+        </div>
+        <div class="pt-4 align-items-center">
+            <div class="col text-center">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </form>
+</div>

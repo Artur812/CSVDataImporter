@@ -1,7 +1,15 @@
+using CSVDataImporter.Data;
+using CSVDataImporter.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
+
+builder.Services.AddScoped<EmployeeService>();
 
 var app = builder.Build();
 
