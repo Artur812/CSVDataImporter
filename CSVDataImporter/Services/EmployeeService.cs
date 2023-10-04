@@ -59,7 +59,7 @@ namespace CSVDataImporter.Services
                 while (!parser.EndOfData)
                 {
                     string[] row = parser.ReadFields()!;
-                    Employee employee = new()
+                    Employee employee = new() // set value to property from by index
                     {
                         Payroll_Number = row[0],
                         Forenames = row[1],
